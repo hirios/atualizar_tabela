@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+    <style>
+        * {
+            /* Change your font family */
+            font-family: sans-serif;
+        }
+        .content-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minha tabela</h1>
+    <table class="content-table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Chat</th>
+            </tr>
+        </thead>
+        <tbody id="tabela">
+            <tr>
+                <!-- <td>teste</td>
+                <td>teste</td> -->
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="Atualizar()">Atualizar</button>
+    <script>
+        function createElement(chat, titulo) {
+            let trElement = document.createElement('tr')
+            let tdElementTitulo = document.createElement('td')
+            let tdElementChat = document.createElement('td')
+
+            tdElementTitulo.innerText = titulo
+            tdElementChat.innerText = chat
+            
+            trElement.appendChild(tdElementTitulo)
+            trElement.appendChild(tdElementChat)
+
+            document.querySelector('[id="tabela"]').appendChild(trElement)
+        }
+
+        function Atualizar() {
+            fetch('/json')
+                .then(async function (response) {
+                    let resposta = await response.json()
+                    for (x of resposta) {
+                        console.log(x)
+                        createElement(chat=x['Chat'], titulo=x['Titulo'])
+                    }
+                })
+        }
+    </script>
+</body>
+</html>
